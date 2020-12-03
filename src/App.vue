@@ -1,16 +1,27 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <button @click="apiCall">실행</button>
+  <HelloWorld msg="미세먼지"/>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
+import axios from 'axios';
 
 export default {
   name: 'App',
   components: {
     HelloWorld
-  }
+  },
+  methods: {
+    async apiCall() {
+      console.log(process.env.VUE_APP_DUST_API_KEY);
+      const res = await axios.get(`http://openapi.airkorea.or.kr
+      /openapi/services/rest/MsrstnInfoInqireSvc/getNearbyMsrstnList?
+      tmX=244148.546388&tmY=412423.75772&ServiceKey=${process.env.VUE_APP_DUST_API_KEY}&autoload=false`)
+      console.log(res);
+    }
+  },
 }
 </script>
 
